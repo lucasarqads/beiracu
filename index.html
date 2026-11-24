@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Beiracu — moda minimalista para quem vive perto da beira. Roupas femininas, masculinas, calçados e acessórios.">
+  <title>Beiracu — summer 2027</title>
+
+  <!-- Favicon (gerado a partir de assets/img/marca/originais/favicon.png, recortado no desenho) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/marca/favicon/favicon-32.png?v=3">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/img/marca/favicon/favicon-192.png?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/marca/favicon/apple-touch-icon.png?v=3">
+
+  <!-- Fontes: Outfit (texto) e Playfair Display (somente logo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Scripts (classic + defer: funcionam abrindo o arquivo direto no navegador) -->
+  <script src="assets/js/products.js" defer></script>
+  <script src="assets/js/cart.js" defer></script>
+  <script src="assets/js/slider.js" defer></script>
+  <script src="assets/js/gallery.js" defer></script>
+  <script src="assets/js/lightbox.js" defer></script>  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+
+  <!-- ==========================================================
+       SPRITE DE ÍCONES SVG (reutilizados com <use href="#...">)
+       ========================================================== -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="svg-sprite" aria-hidden="true" focusable="false">
+    <symbol id="icon-user" viewBox="0 0 24 24">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="7"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </symbol>
+    <symbol id="icon-bag" viewBox="0 0 24 24">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24">
+      <polyline points="15 18 9 12 15 6"/>
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+      <polyline points="9 18 15 12 9 6"/>
+    </symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24">
+      <polyline points="6 9 12 15 18 9"/>
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24">
+      <line x1="3" y1="7" x2="21" y2="7"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="17" x2="21" y2="17"/>
+    </symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <line x1="5" y1="12" x2="19" y2="12"/>
+    </symbol>
+    <symbol id="icon-minus" viewBox="0 0 24 24">
+      <line x1="5" y1="12" x2="19" y2="12"/>
+    </symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </symbol>
+    <symbol id="icon-facebook" viewBox="0 0 24 24">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+    </symbol>
+    <symbol id="icon-youtube" viewBox="0 0 24 24">
+      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+      <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+    </symbol>
+  </svg>
+
+  <!-- Link para pular direto ao conteúdo (acessibilidade) -->
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- ==========================================================
+       1. HEADER / MENU DE NAVEGAÇÃO
+       ========================================================== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+
+      <!-- Coluna esquerda: hambúrguer (mobile) + navegação -->
+      <div class="header__left">
+        <button class="header__icon-btn header__menu-btn" type="button"
+                aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">
+          <svg class="icon" aria-hidden="true"><use href="#icon-menu"></use></svg>
+        </button>
+
+        <!-- No desktop é uma barra de links; abaixo de 992px vira um drawer lateral -->
+        <nav class="nav" id="main-nav" aria-label="Menu principal">
+          <div class="nav__head">
+            <span class="nav__logo">Beiracu</span>
+            <button class="header__icon-btn nav__close" type="button" aria-label="Fechar menu" data-drawer-close>
+              <svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+            </button>
+          </div>
+
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a class="nav__link" href="#" aria-current="page">Início</a>
+            </li>
+
+            <!-- Dropdown: Loja -->
+            <li class="nav__item nav__item--has-dropdown">
+              <button class="nav__link nav__toggle" type="button" aria-expanded="false" aria-controls="dropdown-loja">
+                Loja
+                <svg class="icon icon--xs nav__chevron" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+              </button>
+              <ul class="nav__dropdown" id="dropdown-loja">
+                <!-- TODO: substituir pelos links reais das categorias -->
+                <li><a class="nav__dropdown-link" href="#novidades" data-filter-link="todos">Novidades</a></li>
+                <li><a class="nav__dropdown-link" href="#novidades" data-filter-link="feminino">Feminino</a></li>
+                <li><a class="nav__dropdown-link" href="#novidades" data-filter-link="masculino">Masculino</a></li>
+                <li><a class="nav__dropdown-link" href="#novidades" data-filter-link="calcados">Calçados</a></li>
+                <li><a class="nav__dropdown-link" href="#novidades" data-filter-link="acessorios">Acessórios</a></li>
+              </ul>
+            </li>
+
+            <!-- Dropdown: Coleções -->
+            <li class="nav__item nav__item--has-dropdown">
+              <button class="nav__link nav__toggle" type="button" aria-expanded="false" aria-controls="dropdown-colecoes">
+                Coleções
+                <svg class="icon icon--xs nav__chevron" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+              </button>
+              <ul class="nav__dropdown" id="dropdown-colecoes">
+                <!-- Coleções filtram a grade de Novidades (data-filter-link="colecao:<nome>") -->
+                <li><a class="nav__dropdown-link" href="#novidades" data-filter-link="colecao:Coleção Verão">Coleção Verão</a></li>
+                <li><a class="nav__dropdown-link" href="#novidades" data-filter-link="colecao:Coleção Regatas">Coleção Regatas</a></li>
+                <li><a class="nav__dropdown-link" href="#novidades" data-filter-link="colecao:Linha Essencial">Linha Essencial</a></li>
+                <li><a class="nav__dropdown-link" href="#novidades" data-filter-link="colecao:Beira-mar">Beira-mar</a></li>
+                <!-- TODO: página de Outlet -->
+
+                <li><a class="nav__dropdown-link" href="#">Outlet</a></li>
+              </ul>
+            </li>
+
+            <li class="nav__item">
+              <a class="nav__link" href="#">Sobre</a> <!-- TODO: link da página Sobre -->
+            </li>
+            <li class="nav__item">
+              <a class="nav__link" href="#contato">Contato</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Coluna central: logo -->
+      <a class="header__logo" href="#" aria-label="Beiracu — página inicial">Beiracu</a>
+
+      <!-- Coluna direita: ícones de ação -->
+      <div class="header__actions">
+        <!-- TODO: link para a página de conta/login -->
+        <a class="header__icon-btn header__icon-btn--account" href="#" aria-label="Minha conta">
+          <svg class="icon" aria-hidden="true"><use href="#icon-user"></use></svg>
+        </a>
+        <!-- TODO: abrir busca -->
+        <button class="header__icon-btn" type="button" aria-label="Buscar produtos">
+          <svg class="icon" aria-hidden="true"><use href="#icon-search"></use></svg>
+        </button>
+        <!-- TODO: link para a página de favoritos -->
+        <a class="header__icon-btn header__icon-btn--wishlist" href="#" aria-label="Favoritos">
+          <svg class="icon" aria-hidden="true"><use href="#icon-heart"></use></svg>
+        </a>
+        <button class="header__icon-btn header__cart-btn" type="button"
+                aria-label="Abrir sacola (0 itens)" aria-expanded="false" aria-controls="mini-cart">
+          <svg class="icon" aria-hidden="true"><use href="#icon-bag"></use></svg>
+          <span class="header__badge" aria-hidden="true">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Overlay escuro do menu mobile (dentro do header para ficar na mesma camada do drawer) -->
+    <div class="overlay overlay--nav" data-overlay="nav"></div>
+  </header>
+
+  <main id="conteudo">
+    <h1 class="visually-hidden">Beiracu — loja de roupas, calçados e acessórios</h1>
+
+    <!-- ========================================================
+         2. HERO (SLIDER)
+         ======================================================== -->
+    <section class="hero" aria-roledescription="carrossel" aria-label="Destaques da loja">
+      <div class="hero__track">
+
+        <!-- Slide 1 -->
+        <!-- Foto: assets/img/colecoes/verao/2026/campanha/capavibe.webp (definida em style.css, .hero__slide--1) -->
+        <div class="hero__slide hero__slide--1 is-active" role="group" aria-roledescription="slide" aria-label="1 de 3">
+          <div class="container hero__content">
+            <p class="hero__label">Coleção Verão</p> <!-- TODO: conteúdo real -->
+            <h2 class="hero__title">Estilo que nasce<br>na beira</h2>
+            <a class="btn btn--light" href="#novidades">Descobrir agora</a>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <!-- Foto: assets/img/colecoes/verao/2026/campanha/capaamigas.webp (definida em style.css, .hero__slide--2) -->
+        <div class="hero__slide hero__slide--2" role="group" aria-roledescription="slide" aria-label="2 de 3">
+          <div class="container hero__content">
+            <p class="hero__label">Linha Essencial</p> <!-- TODO: conteúdo real -->
+            <h2 class="hero__title">Peças simples<br>para todo dia</h2>
+            <a class="btn btn--light" href="#novidades">Descobrir agora</a>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <!-- Foto: assets/img/colecoes/verao/2026/campanha/capasol.webp (definida em style.css, .hero__slide--3) -->
+        <div class="hero__slide hero__slide--3" role="group" aria-roledescription="slide" aria-label="3 de 3">
+          <div class="container hero__content">
+            <p class="hero__label">Novos acessórios</p> <!-- TODO: conteúdo real -->
+            <h2 class="hero__title">Detalhes que<br>fazem a diferença</h2>
+            <a class="btn btn--light" href="#novidades">Descobrir agora</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Setas de navegação -->
+      <button class="hero__arrow hero__arrow--prev" type="button" aria-label="Slide anterior">
+        <svg class="icon" aria-hidden="true"><use href="#icon-arrow-left"></use></svg>
+      </button>
+      <button class="hero__arrow hero__arrow--next" type="button" aria-label="Próximo slide">
+        <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+      </button>
+
+      <!-- Indicadores (dots): gerados pelo slider.js -->
+      <div class="hero__dots" aria-label="Escolher slide"></div>
+    </section>
+
+    <!-- ========================================================
+         3. GRID DE PRODUTOS — NOVIDADES
+         ======================================================== -->
+    <section class="products section" id="novidades" aria-labelledby="novidades-title">
+      <!-- Céu de fundo: fica fixo na tela enquanto os produtos rolam -->
+      <div class="products__sky" aria-hidden="true"><div class="products__sky-image"></div></div>
+
+      <div class="container">
+        <h2 class="section__title" id="novidades-title">Novidades</h2>
+
+        <!-- Abas de filtro -->
+        <div class="filters" role="group" aria-label="Filtrar produtos por categoria">
+          <button class="filters__btn is-active" type="button" data-filter="todos" aria-pressed="true">Todos</button>
+          <button class="filters__btn" type="button" data-filter="feminino" aria-pressed="false">Feminino</button>
+          <button class="filters__btn" type="button" data-filter="masculino" aria-pressed="false">Masculino</button>
+          <button class="filters__btn" type="button" data-filter="calcados" aria-pressed="false">Calçados</button>
+          <button class="filters__btn" type="button" data-filter="acessorios" aria-pressed="false">Acessórios</button>
+        </div>
+
+        <!-- Os cards são renderizados pelo main.js a partir de products.js.
+             Cada card tem um carrossel de fotos dentro da imagem (gallery.js). -->
+        <div class="products__grid" id="products-grid"></div>
+
+        <!-- Anuncia o resultado do filtro para leitores de tela -->
+        <p class="visually-hidden" id="products-status" role="status" aria-live="polite"></p>
+
+        <div class="products__more">
+          <!-- TODO: link para a página com todos os produtos -->
+          <a class="btn btn--outline" href="#">Ver todos os produtos</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================
+       4. FOOTER
+       ========================================================== -->
+  <footer class="footer" id="contato">
+    <div class="container">
+      <div class="footer__grid">
+
+        <!-- Coluna 1: marca -->
+        <div class="footer__col footer__col--brand">
+          <a class="footer__logo" href="#">Beiracu</a>
+          <!-- TODO: frase institucional definitiva -->
+          <p class="footer__text">Roupas leves e atemporais, pensadas para quem vive perto da beira.</p>
+        </div>
+
+        <!-- Coluna 2: loja -->
+        <nav class="footer__col" aria-labelledby="footer-loja">
+          <h2 class="footer__title" id="footer-loja">Loja</h2>
+          <ul class="footer__list">
+            <!-- TODO: links reais -->
+            <li><a class="footer__link" href="#novidades">Novidades</a></li>
+            <li><a class="footer__link" href="#">Feminino</a></li>
+            <li><a class="footer__link" href="#">Masculino</a></li>
+            <li><a class="footer__link" href="#">Calçados</a></li>
+            <li><a class="footer__link" href="#">Acessórios</a></li>
+          </ul>
+        </nav>
+
+        <!-- Coluna 3: ajuda -->
+        <nav class="footer__col" aria-labelledby="footer-ajuda">
+          <h2 class="footer__title" id="footer-ajuda">Ajuda</h2>
+          <ul class="footer__list">
+            <!-- TODO: links reais -->
+            <li><a class="footer__link" href="#">Trocas e devoluções</a></li>
+            <li><a class="footer__link" href="#">Envio e prazos</a></li>
+            <li><a class="footer__link" href="#">Guia de tamanhos</a></li>
+            <li><a class="footer__link" href="#">Perguntas frequentes</a></li>
+            <li><a class="footer__link" href="#">Fale conosco</a></li>
+          </ul>
+        </nav>
+
+        <!-- Coluna 4: newsletter -->
+        <div class="footer__col">
+          <h2 class="footer__title" id="footer-news">Newsletter</h2>
+          <p class="footer__text">Receba novidades e ofertas exclusivas no seu e-mail.</p>
+          <form class="newsletter" novalidate aria-labelledby="footer-news">
+            <label class="visually-hidden" for="newsletter-email">Seu e-mail</label>
+            <div class="newsletter__field">
+              <input class="newsletter__input" type="email" id="newsletter-email" name="email"
+                     placeholder="Seu e-mail" autocomplete="email" required>
+              <button class="newsletter__btn" type="submit">Assinar</button>
+            </div>
+            <p class="newsletter__message" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Linha final -->
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2026 Beiracu. Todos os direitos reservados.</p>
+        <ul class="footer__social" aria-label="Redes sociais">
+          <!-- TODO: URLs reais das redes sociais -->
+          <li>
+            <a class="footer__social-link" href="#" aria-label="Instagram da Beiracu">
+              <svg class="icon" aria-hidden="true"><use href="#icon-instagram"></use></svg>
+            </a>
+          </li>
+          <li>
+            <a class="footer__social-link" href="#" aria-label="Facebook da Beiracu">
+              <svg class="icon" aria-hidden="true"><use href="#icon-facebook"></use></svg>
+            </a>
+          </li>
+          <li>
+            <a class="footer__social-link" href="#" aria-label="YouTube da Beiracu">
+              <svg class="icon" aria-hidden="true"><use href="#icon-youtube"></use></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================
+       MINI-CART (drawer à direita)
+       ========================================================== -->
+  <div class="overlay" data-overlay="cart"></div>
+
+  <aside class="mini-cart" id="mini-cart" role="dialog" aria-modal="true" aria-labelledby="mini-cart-title">
+    <div class="mini-cart__head">
+      <h2 class="mini-cart__title" id="mini-cart-title">Sua sacola <span class="mini-cart__count"></span></h2>
+      <button class="header__icon-btn mini-cart__close" type="button" aria-label="Fechar sacola" data-drawer-close>
+        <svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+      </button>
+    </div>
+
+    <!-- Itens: renderizados pelo cart.js -->
+    <ul class="mini-cart__list" aria-label="Itens na sacola"></ul>
+
+    <p class="mini-cart__empty">Sua sacola está vazia.</p>
+
+    <div class="mini-cart__footer">
+      <div class="mini-cart__subtotal">
+        <span>Subtotal</span>
+        <strong class="mini-cart__subtotal-value">R$ 0,00</strong>
+      </div>
+      <p class="mini-cart__note">Frete e descontos calculados no checkout.</p>
+      <!-- TODO: integrar com o checkout -->
+      <button class="btn btn--dark btn--block mini-cart__checkout" type="button">Finalizar compra</button>
+    </div>
+  </aside>
+
+  <!-- ==========================================================
+       LIGHTBOX (imagem ampliada do produto)
+       ========================================================== -->
+  <dialog class="lightbox" aria-labelledby="lightbox-title">
+    <button class="lightbox__close" type="button" aria-label="Fechar imagem">
+      <svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+    </button>
+
+    <figure class="lightbox__figure">
+      <img class="lightbox__image" src="data:," alt="">
+      <figcaption class="lightbox__caption">
+        <span class="lightbox__title" id="lightbox-title"></span>
+        <span class="lightbox__counter"></span>
+      </figcaption>
+    </figure>
+
+    <button class="lightbox__arrow lightbox__arrow--prev" type="button" aria-label="Foto anterior">
+      <svg class="icon" aria-hidden="true"><use href="#icon-arrow-left"></use></svg>
+    </button>
+    <button class="lightbox__arrow lightbox__arrow--next" type="button" aria-label="Próxima foto">
+      <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+    </button>
+  </dialog>
+
+  <!-- Região dos toasts (lida por leitores de tela) -->
+  <div class="toast-region" role="status" aria-live="polite"></div>
+
+</body>
+</html>

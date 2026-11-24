@@ -1,0 +1,80 @@
+/* ==========================================================
+   DESIGN TOKENS — Beiracu
+   ========================================================== */
+
+:root {
+  /* ---------- Cores ---------- */
+  --color-bg: #FFFFFF;
+  --color-text: #1A1A1A;
+  --color-muted: #8A8A8A;
+  --color-border: #E8E8E8;
+  --color-card-bg: #F2F2F2;
+  --color-hero: #3E6A9E;
+  --color-accent: #1A1A1A;
+  --color-white: #FFFFFF;
+  --color-overlay: rgba(26, 26, 26, 0.45);
+  --color-sale: #B3261E;
+
+  /* ---------- Tipografia ---------- */
+  --font-body: "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-logo: "Playfair Display", Georgia, "Times New Roman", serif;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+
+  --fs-label: 11px;      /* labels pequenos em UPPERCASE */
+  --fs-label-lg: 12px;
+  --fs-small: 13px;
+  --fs-base: 14px;
+  --fs-body: 15px;
+  --fs-lg: 18px;
+  --fs-section: 32px;    /* títulos de seção */
+
+  --ls-tight: -0.02em;   /* títulos */
+  --ls-label: 1px;       /* labels UPPERCASE */
+
+  /* ---------- Espaçamento (escala de 4px) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-11: 44px;
+  --space-12: 48px;
+
+  --section-spacing: calc(var(--space-12) * 1.5);  /* 72px */
+
+  /* ---------- Layout ---------- */
+  --container-max: 1280px;
+  --container-padding: 24px;
+  --header-height: 64px;
+  --drawer-width: 400px;
+
+  /* ---------- Bordas e sombras ---------- */
+  --radius: 0;
+  --radius-sm: 2px;
+  --shadow-soft: 0 8px 24px rgba(26, 26, 26, 0.06);
+
+  /* ---------- Transições ---------- */
+  --transition: 0.3s ease;
+
+  /* ---------- Camadas ---------- */
+  --z-header: 100;
+  --z-overlay: 200;
+  --z-drawer: 210;
+  --z-toast: 300;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --header-height: 80px;
+    --section-spacing: calc(var(--space-12) * 2);  /* 96px */
+  }
+}

@@ -1,0 +1,28 @@
+# Imagens originais em alta resolução (o site usa só os .webp ao lado)
+# Atenção: não vão para o GitHub. Guarde um backup em outro lugar.
+originais/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores e ferramentas
+.vscode/
+.idea/
+.claude/
+*.swp
+
+# Temporários e logs
+*.log
+*.tmp
+*.bak
+
+# Segredos (caso existam no futuro)
+.env
+.env.*
+!.env.example
+
+# Dependências e build (caso existam no futuro)
+node_modules/
+dist/

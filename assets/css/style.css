@@ -1,0 +1,2186 @@
+/* ==========================================================
+   BEIRACU — ESTILOS PRINCIPAIS
+   Mobile-first. Breakpoints: 420px · 576px · 769px · 992px · 1025px
+   Padrão de classes: BEM (.bloco__elemento--modificador)
+   ========================================================== */
+
+
+/* ==========================================================
+   BASE
+   ========================================================== */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/* Trava o scroll quando um drawer está aberto */
+body.is-locked {
+  overflow: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-tight);
+  line-height: 1.2;
+}
+
+/* Foco visível para navegação por teclado */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--color-text);
+  color: var(--color-white);
+}
+
+
+/* ==========================================================
+   UTILITÁRIOS
+   ========================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.svg-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: var(--z-toast);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-text);
+  color: var(--color-white);
+  font-size: var(--fs-base);
+  transform: translateY(-200%);
+  transition: transform var(--transition);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Ícones SVG (traço herda a cor do texto) */
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon--xs { width: 12px; height: 12px; }
+.icon--sm { width: 16px; height: 16px; }
+
+
+/* ==========================================================
+   BOTÕES
+   ========================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 14px 32px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-size: var(--fs-label-lg);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  line-height: 1.2;
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+
+/* Branco sólido (usado no hero) */
+.btn--light {
+  background: var(--color-white);
+  color: var(--color-text);
+  border-color: var(--color-white);
+}
+
+.btn--light:hover {
+  background: transparent;
+  color: var(--color-white);
+}
+
+/* Contorno */
+.btn--outline {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.btn--outline:hover {
+  background: var(--color-text);
+  color: var(--color-white);
+}
+
+/* Escuro sólido */
+.btn--dark {
+  background: var(--color-accent);
+  color: var(--color-white);
+  border-color: var(--color-accent);
+}
+
+.btn--dark:hover {
+  background: #333333;
+  border-color: #333333;
+}
+
+.btn--dark:disabled {
+  background: var(--color-border);
+  border-color: var(--color-border);
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+
+/* ==========================================================
+   OVERLAY (menu mobile e mini-cart)
+   ========================================================== */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: var(--color-overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition), visibility 0s linear 0.3s;
+}
+
+.overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--transition);
+}
+
+/* O overlay do menu vive dentro do header (contexto de empilhamento próprio) */
+.overlay--nav {
+  z-index: 1;
+}
+
+
+/* ==========================================================
+   1. HEADER
+   ========================================================== */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-header);
+  height: var(--header-height);
+  color: var(--color-white);
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+
+/* Estado após rolar 80px: fundo branco, texto escuro */
+.header--scrolled {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  border-bottom-color: var(--color-border);
+}
+
+.header__inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 100%;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+}
+
+/* Logo */
+.header__logo {
+  font-family: var(--font-logo);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Ícones da direita */
+.header__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0;
+  margin-right: calc(var(--space-2) * -1);
+}
+
+.header__icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; /* 40px a partir de 576px */
+  height: 40px;
+  color: inherit;
+  transition: opacity var(--transition);
+}
+
+.header__icon-btn:hover {
+  opacity: 0.65;
+}
+
+.header__menu-btn {
+  margin-left: calc(var(--space-2) * -1);
+}
+
+/* Em telas muito pequenas, esconde o ícone de conta para caber tudo */
+.header__icon-btn--account {
+  display: none;
+}
+
+/* Badge da sacola */
+.header__badge {
+  position: absolute;
+  top: 3px;
+  right: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--color-text);
+  font-size: 10px;
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.header--scrolled .header__badge {
+  background: var(--color-text);
+  color: var(--color-white);
+}
+
+.header__badge.is-bump {
+  animation: badge-bump 0.5s ease;
+}
+
+@keyframes badge-bump {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.4); }
+  55%  { transform: scale(0.9); }
+  80%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+
+/* ---------- Navegação (mobile: drawer lateral) ---------- */
+
+.nav {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: min(320px, 85vw);
+  padding: 0 var(--space-6) var(--space-8);
+  overflow-y: auto;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform var(--transition), visibility 0s linear 0.3s;
+}
+
+.nav.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform var(--transition);
+}
+
+.nav__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--header-height);
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav__logo {
+  font-family: var(--font-logo);
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.nav__close {
+  margin-right: calc(var(--space-2) * -1);
+}
+
+.nav__item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+  width: 100%;
+  padding: var(--space-4) 0;
+  font-size: var(--fs-body);
+  text-align: left;
+  color: inherit;
+}
+
+.nav__chevron {
+  transition: transform var(--transition);
+}
+
+.nav__item.is-expanded .nav__chevron {
+  transform: rotate(180deg);
+}
+
+/* Submenu no mobile: acordeão */
+.nav__dropdown {
+  display: none;
+  padding: 0 0 var(--space-3) var(--space-3);
+}
+
+.nav__item.is-expanded > .nav__dropdown {
+  display: block;
+}
+
+.nav__dropdown-link {
+  display: block;
+  padding: var(--space-2) 0;
+  font-size: var(--fs-base);
+  color: var(--color-muted);
+  transition: color var(--transition);
+}
+
+.nav__dropdown-link:hover {
+  color: var(--color-text);
+}
+
+
+/* ==========================================================
+   2. HERO (SLIDER)
+   ========================================================== */
+
+.hero {
+  position: relative;
+  height: 80vh;
+  height: 80svh;
+  min-height: 520px;
+  overflow: hidden;
+  background-color: var(--color-hero);
+  color: var(--color-white);
+}
+
+.hero__track {
+  position: absolute;
+  inset: 0;
+  touch-action: pan-y;
+}
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-hero);
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0s linear 0.8s;
+}
+
+.hero__slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.8s ease;
+}
+
+/* Véu para garantir contraste do texto e do header sobre as fotos claras.
+   Mobile: o texto ocupa a largura toda, então o véu é mais uniforme. */
+.hero__slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10, 20, 35, 0.45) 0%, rgba(10, 20, 35, 0) 22%),   /* topo: header */
+    linear-gradient(0deg, rgba(10, 20, 35, 0.35) 0%, rgba(10, 20, 35, 0) 25%),     /* base: dots */
+    rgba(10, 20, 35, 0.3);
+  pointer-events: none;
+}
+
+@media (min-width: 769px) {
+  /* Desktop: escurece mais o lado esquerdo, onde fica o texto */
+  .hero__slide::after {
+    background:
+      linear-gradient(180deg, rgba(10, 20, 35, 0.4) 0%, rgba(10, 20, 35, 0) 20%),
+      linear-gradient(0deg, rgba(10, 20, 35, 0.3) 0%, rgba(10, 20, 35, 0) 22%),
+      linear-gradient(90deg, rgba(10, 20, 35, 0.6) 0%, rgba(10, 20, 35, 0.3) 40%, rgba(10, 20, 35, 0) 65%);
+  }
+}
+
+/* Fotos do hero (WebP 1920px otimizados a partir de assets/img/colecoes/verao/2026/campanha/originais/).
+   background-position: ponto de foco no corte vertical do mobile. */
+.hero__slide--1 {
+  background-image: url("../img/colecoes/verao/2026/campanha/capavibe.webp");
+  background-position: 52% center;   /* shorts na mão */
+}
+
+.hero__slide--2 {
+  background-image: url("../img/colecoes/verao/2026/campanha/capaamigas.webp");
+  background-position: 50% center;   /* grupo de amigas */
+}
+
+.hero__slide--3 {
+  background-image: url("../img/colecoes/verao/2026/campanha/capasol.webp");
+  background-position: 22% center;   /* shorts na toalha */
+}
+
+@media (min-width: 769px) {
+  .hero__slide--1,
+  .hero__slide--2,
+  .hero__slide--3 {
+    background-position: center;
+  }
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  padding-top: var(--header-height);
+}
+
+/* Entrada suave do conteúdo do slide ativo */
+.hero__label,
+.hero__title,
+.hero__content .btn {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.hero__slide.is-active .hero__label,
+.hero__slide.is-active .hero__title,
+.hero__slide.is-active .hero__content .btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero__slide.is-active .hero__label { transition-delay: 0.25s; }
+.hero__slide.is-active .hero__title { transition-delay: 0.4s; }
+.hero__slide.is-active .hero__content .btn { transition-delay: 0.55s; }
+
+.hero__label {
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-label-lg);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+
+.hero__title {
+  margin-bottom: var(--space-8);
+  font-size: clamp(2.25rem, 4vw + 1.5rem, 4rem); /* ~36px no mobile → 48–64px no desktop */
+  font-weight: var(--fw-medium);
+  line-height: 1.1;
+  letter-spacing: var(--ls-tight);
+}
+
+/* Setas */
+.hero__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--color-text);
+  transform: translateY(-50%);
+  transition: background-color var(--transition), color var(--transition), transform var(--transition);
+}
+
+.hero__arrow:hover {
+  background: var(--color-text);
+  color: var(--color-white);
+}
+
+.hero__arrow:focus-visible {
+  outline-color: var(--color-white);
+}
+
+.hero__arrow--prev { left: var(--space-6); }
+.hero__arrow--next { right: var(--space-6); }
+
+/* Indicadores */
+.hero__dots {
+  position: absolute;
+  bottom: var(--space-8);
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  gap: var(--space-1);
+  transform: translateX(-50%);
+}
+
+.hero__dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.hero__dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--color-white);
+  border-radius: 50%;
+  background: transparent;
+  transition: background-color var(--transition), transform var(--transition);
+}
+
+.hero__dot:hover::before {
+  transform: scale(1.25);
+}
+
+.hero__dot[aria-current="true"]::before {
+  background: var(--color-white);
+}
+
+
+/* ==========================================================
+   SEÇÕES
+   ========================================================== */
+
+.section {
+  padding-block: var(--section-spacing);
+}
+
+.section__title {
+  margin-bottom: var(--space-6);
+  font-size: var(--fs-section);
+  font-weight: var(--fw-regular);
+  text-align: center;
+}
+
+
+/* ==========================================================
+   3. PRODUTOS — FILTROS E GRID
+   ========================================================== */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-6);
+  margin-bottom: var(--space-10);
+}
+
+.filters__btn {
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid transparent;
+  font-size: var(--fs-label-lg);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.filters__btn:hover {
+  color: var(--color-text);
+}
+
+.filters__btn.is-active {
+  color: var(--color-text);
+  border-bottom-color: var(--color-text);
+}
+
+.products__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 64px var(--space-6); /* linhas mais afastadas: a modelo ultrapassa o topo do card */
+  transition: opacity var(--transition);
+}
+
+/* Fade ao trocar de filtro */
+.products__grid.is-fading {
+  opacity: 0;
+}
+
+.products__empty {
+  grid-column: 1 / -1;
+  padding: var(--space-12) 0;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.products__more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-12);
+}
+
+
+
+/* ---------- Céu de fundo da seção ---------- */
+
+.products {
+  position: relative;
+  isolation: isolate;
+  background: #4A9AD3;
+}
+
+.products__sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+/* Acompanha a rolagem (sticky): o céu aparece inteiro mesmo na seção longa do celular */
+.products__sky-image {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  max-height: 100%;
+  background: url("../img/fundos/ceucapa.webp") center bottom / cover no-repeat;
+}
+
+/* Textos cinza ficam escuros para dar leitura sobre o céu */
+.products .filters__btn,
+.products .product-card__collection,
+.products .product-card__price-old,
+.products .product-card__color-name {
+  color: var(--color-text);
+}
+
+.products .product-card__size {
+  border-color: transparent;
+  background: var(--color-white);
+}
+
+.products .product-card__size:hover {
+  border-color: var(--color-text);
+}
+
+.products .product-card__size[aria-pressed="true"] {
+  background: var(--color-text);
+}
+
+/* Anel branco: as bolinhas azuis não se confundem com o céu */
+.products .product-card__swatch::before {
+  box-shadow: 0 0 0 2px var(--color-white);
+}
+
+.products .product-card__size-error {
+  width: fit-content;
+  padding-inline: var(--space-2);
+  background: var(--color-white);
+}
+
+.products .btn--outline {
+  background: var(--color-white);
+}
+
+.products .btn--outline:hover {
+  background: var(--color-text);
+}
+
+
+/* ---------- Card de produto ---------- */
+
+.product-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "media"
+    "info"
+    "add";
+  align-content: start;
+  animation: card-in 0.5s ease backwards; /* não 'both': isolaria o card e o vidro não desfocaria o céu */
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.product-card__media {
+  grid-area: media;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+/* ---------- Galeria dentro da imagem (carrossel por card) ---------- */
+
+/* Trilho horizontal com scroll-snap: swipe nativo no touch */
+.product-card__slides {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.product-card__slides::-webkit-scrollbar {
+  display: none;
+}
+
+/* Cada foto é um botão que abre o lightbox */
+.product-card__zoom {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  cursor: zoom-in;
+}
+
+.product-card__zoom:focus-visible {
+  outline-offset: -2px;
+}
+
+.product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Respiro interno: a peça não encosta nas bordas do quadro */
+  padding: 6%;
+  transition: transform 0.6s ease;
+  -webkit-user-drag: none;
+}
+
+/* Troca de cor: a foto nova entra por cima e "tinge" de cima para baixo.
+   A máscara é um degradê 3x mais alto que a foto; ao deslizar, a borda
+   suave desce pela imagem revelando a nova cor. */
+.product-card__image--dye {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 58%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 58%, transparent 100%);
+  -webkit-mask-size: 100% 300%;
+  mask-size: 100% 300%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: 0 100%;
+  mask-position: 0 100%;
+}
+
+.product-card__image--dye.is-dyeing {
+  animation: dye-down 0.9s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes dye-down {
+  from {
+    -webkit-mask-position: 0 100%;
+    mask-position: 0 100%;
+  }
+  to {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
+
+
+/* Fotos com cenário: preenchem o quadro (corte puxado para o alto) */
+.product-card--cover .product-card__image {
+  padding: 0;
+  object-fit: cover;
+  object-position: center 12%;
+}
+
+/* Capa inclinada (campo "inclinacao" do produto). Usa "rotate" para somar
+   com o zoom do hover, que usa "transform". */
+.product-card__zoom:first-child .product-card__image {
+  rotate: var(--tilt, none);
+}
+
+/* Modelo recortada: aproximada, com a base dissolvendo no fundo.
+   A máscara fica no botão para não conflitar com a da troca de cor. */
+.product-card--model .product-card__media,
+.product-card--model-mixed .product-card__media {
+  overflow: visible;
+}
+
+/* Ultrapassa 20px o topo do quadro (cabe no vão de 64px da grade) */
+.product-card--model .product-card__slides,
+.product-card--model-mixed .product-card__slides {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  height: calc(100% + 20px);
+}
+
+.product-card__zoom--model .product-card__image,
+.product-card--model .product-card__image {
+  padding: 0;
+  object-fit: cover;
+  object-position: center top;
+  transform-origin: center top;
+}
+
+.product-card__zoom--model,
+.product-card--model .product-card__zoom {
+  -webkit-mask-image: linear-gradient(to bottom, #000 93%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 93%, transparent 100%);
+}
+
+/* Card misto: só as fotos da modelo usam os 20px extras; a peça fica no lugar */
+.product-card--model-mixed .product-card__zoom:not(.product-card__zoom--model) {
+  padding-top: 20px;
+}
+
+.product-card--model-mixed .product-card__zoom:not(.product-card__zoom--model) .product-card__image--dye {
+  top: 20px;
+  height: calc(100% - 20px);
+}
+
+/* Setas da galeria */
+.product-card__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--color-text);
+  transform: translateY(-50%);
+  transition: opacity var(--transition), background-color var(--transition), color var(--transition);
+}
+
+.product-card__nav:hover:not(:disabled) {
+  background: var(--color-text);
+  color: var(--color-white);
+}
+
+.product-card__nav:disabled {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.product-card__nav--prev { left: var(--space-2); }
+.product-card__nav--next { right: var(--space-2); }
+
+/* Dots da galeria */
+.product-card__dots {
+  position: absolute;
+  bottom: var(--space-3);
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  gap: 6px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.product-card__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-text);
+  /* Contorno claro: dot visível também sobre fotos escuras */
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.7);
+  opacity: 0.3;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.product-card__dot.is-active {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+
+/* Favoritar */
+.product-card__wishlist {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--color-text);
+  transition: transform var(--transition), color var(--transition);
+}
+
+.product-card__wishlist:hover {
+  transform: scale(1.1);
+}
+
+.product-card__wishlist .icon {
+  transition: fill var(--transition);
+}
+
+.product-card__wishlist.is-active .icon {
+  fill: currentColor;
+}
+
+.product-card__wishlist.is-pop {
+  animation: heart-pop 0.4s ease;
+}
+
+@keyframes heart-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* Informações */
+.product-card__info {
+  grid-area: info;
+  padding-top: var(--space-4);
+}
+
+.product-card__collection {
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.product-card__title {
+  display: -webkit-box;
+  margin-bottom: var(--space-2);
+  overflow: hidden;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  line-height: 1.4;
+  letter-spacing: 0;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.product-card__title a {
+  transition: opacity var(--transition);
+}
+
+.product-card__title a:hover {
+  opacity: 0.65;
+}
+
+.product-card__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-medium);
+}
+
+.product-card__price-old {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-regular);
+  color: var(--color-muted);
+}
+
+/* ---------- Seletor de cores ---------- */
+
+.product-card__colors {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.product-card__swatches {
+  display: flex;
+  gap: var(--space-1);
+}
+
+/* Área de clique de 24px com a bolinha de 16px no centro */
+.product-card__swatch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.product-card__swatch::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--swatch);
+  /* Contorno sutil: cores claras não somem no fundo branco */
+  box-shadow: inset 0 0 0 1px rgba(26, 26, 26, 0.12);
+}
+
+.product-card__swatch:hover {
+  transform: scale(1.1);
+}
+
+.product-card__swatch[aria-pressed="true"] {
+  border-color: var(--color-text);
+}
+
+.product-card__color-name {
+  font-size: var(--fs-label-lg);
+  color: var(--color-muted);
+}
+
+/* ---------- Seletor de tamanhos ---------- */
+
+.product-card__sizes {
+  margin-top: var(--space-3);
+}
+
+.product-card__size-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* 32px + 6px: os 7 números dos calçados cabem em uma linha no desktop */
+.product-card__size {
+  min-width: 32px;
+  height: 32px;
+  padding-inline: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-label-lg);
+  line-height: 1;
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.product-card__size:hover {
+  border-color: var(--color-text);
+}
+
+.product-card__size[aria-pressed="true"] {
+  border-color: var(--color-text);
+  background: var(--color-text);
+  color: var(--color-white);
+}
+
+.product-card__size:focus-visible {
+  outline-color: var(--color-text);
+}
+
+.product-card__size-error {
+  font-size: var(--fs-label-lg);
+  color: var(--color-sale);
+}
+
+.product-card__size-error:not(:empty) {
+  margin-top: var(--space-2);
+}
+
+/* Botão "Adicionar ao carrinho" — mobile: sempre visível abaixo do preço */
+.product-card__add {
+  grid-area: add;
+  width: 100%;
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  /* Vidro: translúcido, desfoca o que está atrás */
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.22));
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  backdrop-filter: blur(12px) saturate(1.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 4px 16px rgba(20, 50, 80, 0.14);
+  color: var(--color-text);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  transition: background-color var(--transition), clip-path var(--transition), transform var(--transition);
+}
+
+.product-card__add:hover {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.product-card__add:focus-visible {
+  outline-color: var(--color-text);
+}
+
+
+/* ==========================================================
+   4. FOOTER
+   ========================================================== */
+
+.footer {
+  padding-top: var(--space-8);
+  /* Textos sobre a areia; embaixo, a foto: coqueiros, calçada e rua.
+     A foto (original + espelho) repete na lateral e o topo dela se dissolve na areia. */
+  --photo-height: 320px;
+  padding-bottom: calc(var(--photo-height) * 0.85);
+  background:
+    url("../img/fundos/footercapa.webp") left bottom / auto var(--photo-height) repeat-x,
+    url("../img/fundos/footer-areia.webp") center top / 560px auto #DCC79B;
+  color: var(--color-text);
+}
+
+@media (min-width: 769px) {
+  .footer {
+    --photo-height: 480px;
+    padding-bottom: calc(var(--photo-height) * 0.83);
+  }
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-10);
+}
+
+.footer__logo {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-logo);
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.footer__text {
+  max-width: 320px;
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--color-muted);
+}
+
+.footer__title {
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-label-lg);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+
+.footer__list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.footer__link {
+  font-size: var(--fs-base);
+  color: var(--color-muted);
+  transition: color var(--transition);
+}
+
+.footer__link:hover {
+  color: var(--color-text);
+}
+
+/* Newsletter */
+.newsletter {
+  margin-top: var(--space-4);
+}
+
+.newsletter__field {
+  display: flex;
+  border: 1px solid var(--color-text);
+}
+
+.newsletter__input {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  font-size: var(--fs-base);
+}
+
+.newsletter__input::placeholder {
+  color: var(--color-muted);
+}
+
+.newsletter__input:focus-visible {
+  outline: none;
+}
+
+.newsletter__field:focus-within {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+.newsletter__btn {
+  padding: var(--space-3) var(--space-5);
+  background: var(--color-accent);
+  color: var(--color-white);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  transition: background-color var(--transition);
+}
+
+.newsletter__btn:hover {
+  background: #333333;
+}
+
+.newsletter__message {
+  min-height: 1.5em;
+  margin-top: var(--space-2);
+  font-size: var(--fs-small);
+}
+
+.newsletter__message.is-error {
+  color: var(--color-sale);
+}
+
+/* Linha final */
+.footer__bottom {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+  padding-block: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.footer__copy {
+  font-size: var(--fs-small);
+  color: var(--color-muted);
+}
+
+.footer__social {
+  display: flex;
+  gap: var(--space-2);
+  margin-left: calc(var(--space-2) * -1);
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--color-text);
+  transition: opacity var(--transition);
+}
+
+.footer__social-link:hover {
+  opacity: 0.6;
+}
+
+.footer__social-link .icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Cores do rodapé sobre a areia */
+.footer__text,
+.footer__link,
+.footer__copy {
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+}
+
+.footer__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer__bottom {
+  border-top-color: rgba(26, 26, 26, 0.35);
+}
+
+.footer .newsletter__field {
+  background: var(--color-white);
+}
+
+.footer .newsletter__input::placeholder {
+  color: #6B6B6B;
+}
+
+.footer .newsletter__message.is-error {
+  color: #8C1D18;
+}
+
+
+/* ==========================================================
+   MINI-CART (drawer à direita)
+   ========================================================== */
+
+.mini-cart {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-drawer);
+  display: flex;
+  flex-direction: column;
+  width: min(var(--drawer-width), 100%);
+  background: var(--color-bg);
+  color: var(--color-text);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform var(--transition), visibility 0s linear 0.3s;
+}
+
+.mini-cart.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform var(--transition);
+}
+
+.mini-cart__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--header-height);
+  padding: 0 var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mini-cart__title {
+  font-size: var(--fs-lg);
+}
+
+.mini-cart__count {
+  font-size: var(--fs-base);
+  color: var(--color-muted);
+}
+
+.mini-cart__close {
+  margin-right: calc(var(--space-2) * -1);
+}
+
+.mini-cart__list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 var(--space-6);
+}
+
+.mini-cart__empty {
+  display: none;
+  flex: 1;
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.mini-cart--empty .mini-cart__list { display: none; }
+.mini-cart--empty .mini-cart__empty { display: block; }
+
+.mini-cart__footer {
+  padding: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.mini-cart__subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-body);
+}
+
+.mini-cart__subtotal-value {
+  font-weight: var(--fw-medium);
+}
+
+.mini-cart__note {
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-label-lg);
+  color: var(--color-muted);
+}
+
+/* Item do mini-cart */
+.cart-item {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cart-item__thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+}
+
+.cart-item__collection {
+  margin-bottom: 2px;
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.cart-item__name {
+  margin-bottom: var(--space-3);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+/* Com a linha de cor, o espaçamento passa para ela */
+.cart-item__name:has(+ .cart-item__color) {
+  margin-bottom: 2px;
+}
+
+.cart-item__color {
+  margin-bottom: var(--space-3);
+  font-size: var(--fs-label-lg);
+  color: var(--color-muted);
+}
+
+.cart-item__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+}
+
+.qty__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  transition: background-color var(--transition);
+}
+
+.qty__btn:hover {
+  background: var(--color-card-bg);
+}
+
+.qty__btn:disabled {
+  color: var(--color-border);
+  cursor: not-allowed;
+  background: transparent;
+}
+
+.qty__value {
+  min-width: 28px;
+  font-size: var(--fs-base);
+  text-align: center;
+}
+
+.cart-item__remove {
+  font-size: var(--fs-label-lg);
+  color: var(--color-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition);
+}
+
+.cart-item__remove:hover {
+  color: var(--color-text);
+}
+
+.cart-item__price {
+  font-size: var(--fs-base);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+}
+
+
+/* ==========================================================
+   LIGHTBOX (imagem ampliada)
+   ========================================================== */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.lightbox[open] {
+  display: flex;
+  animation: lightbox-in var(--transition) both;
+}
+
+.lightbox::backdrop {
+  background: var(--color-overlay);
+}
+
+@keyframes lightbox-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.lightbox__figure {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: calc(var(--space-12) + var(--space-4)) var(--space-4) var(--space-6);
+  min-width: 0;
+}
+
+.lightbox__image {
+  max-width: min(100%, 960px);
+  max-height: calc(100vh - 160px);
+  max-height: calc(100dvh - 160px);
+  object-fit: contain;
+  transition: opacity var(--transition);
+}
+
+.lightbox__image.is-loading {
+  opacity: 0;
+}
+
+.lightbox__caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  text-align: center;
+}
+
+.lightbox__title {
+  font-size: var(--fs-base);
+}
+
+.lightbox__counter {
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  color: var(--color-muted);
+}
+
+.lightbox__close,
+.lightbox__arrow {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.lightbox__close:hover,
+.lightbox__arrow:hover {
+  background: var(--color-text);
+  color: var(--color-white);
+}
+
+.lightbox__close {
+  top: var(--space-4);
+  right: var(--space-4);
+}
+
+/* Mobile: setas embaixo, para não cobrir a foto */
+.lightbox__arrow {
+  bottom: var(--space-6);
+  border: 1px solid var(--color-border);
+}
+
+@media (min-width: 769px) {
+  .lightbox__arrow {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+  }
+}
+
+.lightbox__arrow--prev { left: var(--space-4); }
+.lightbox__arrow--next { right: var(--space-4); }
+
+
+/* ==========================================================
+   TOAST
+   ========================================================== */
+
+.toast-region {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  left: var(--space-4);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 14px var(--space-5);
+  background: var(--color-text);
+  color: var(--color-white);
+  font-size: var(--fs-base);
+  box-shadow: var(--shadow-soft);
+  animation: toast-in var(--transition) both;
+}
+
+.toast.is-leaving {
+  animation: toast-out var(--transition) both;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(12px); }
+}
+
+
+/* ==========================================================
+   RESPONSIVO (mobile-first)
+   ========================================================== */
+
+/* ≥ 420px — 2 colunas de produtos */
+@media (min-width: 420px) {
+  .products__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ≥ 576px */
+@media (min-width: 576px) {
+  .header__icon-btn--account {
+    display: inline-flex;
+  }
+
+  .header__icon-btn {
+    width: 40px;
+  }
+
+  .header__actions {
+    gap: var(--space-1);
+  }
+
+  .header__logo {
+    font-size: 26px;
+  }
+
+  .footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .toast-region {
+    left: auto;
+    right: var(--space-6);
+    bottom: var(--space-6);
+  }
+
+  .toast {
+    width: auto;
+    max-width: 360px;
+  }
+}
+
+/* ≥ 769px — tablet: 3 colunas, setas no hero */
+@media (min-width: 769px) {
+  .hero {
+    height: 100vh;
+    height: 100svh;
+  }
+
+  .hero__arrow {
+    display: flex;
+  }
+
+  .hero__content {
+    padding-inline: calc(var(--container-padding) + 44px + var(--space-6));
+  }
+
+  .products__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lightbox__arrow--prev { left: var(--space-8); }
+  .lightbox__arrow--next { right: var(--space-8); }
+
+  .footer__bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer__social {
+    margin-left: 0;
+    margin-right: calc(var(--space-2) * -1);
+  }
+}
+
+/* ≥ 769px com mouse — botão "Adicionar" sobe da base da imagem no hover */
+@media (min-width: 769px) and (hover: hover) {
+  .product-card {
+    grid-template-areas:
+      "media"
+      "info";
+  }
+
+  .product-card__add {
+    grid-area: media;
+    align-self: end;
+    z-index: 3; /* acima dos dots */
+    margin-top: 0;
+    padding: 14px var(--space-4);
+    clip-path: inset(100% 0 0 0);
+    transform: translateY(8px);
+  }
+
+  .product-card__media:hover ~ .product-card__add,
+  .product-card__add:hover,
+  .product-card__add:focus-visible {
+    clip-path: inset(0);
+    transform: translateY(0);
+  }
+
+  .product-card__media:hover .product-card__image,
+  .product-card:has(.product-card__add:hover) .product-card__image {
+    transform: scale(1.05);
+  }
+
+  /* Com o botão "Adicionar" visível, os dots saem de cena */
+  .product-card__media:hover .product-card__dots,
+  .product-card:has(.product-card__add:hover) .product-card__dots {
+    opacity: 0;
+  }
+}
+
+/* ≥ 992px — desktop: menu horizontal com dropdowns */
+@media (min-width: 992px) {
+  .header__menu-btn,
+  .nav__head,
+  .overlay--nav {
+    display: none;
+  }
+
+  .header__logo {
+    font-size: 30px;
+  }
+
+  .nav {
+    position: static;
+    width: auto;
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+    transform: none;
+    visibility: visible;
+    transition: none;
+  }
+
+  .nav__list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-7);
+  }
+
+  .nav__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: var(--header-height);
+    border-bottom: 0;
+  }
+
+  .nav__link {
+    width: auto;
+    padding: var(--space-1) 0;
+    font-size: var(--fs-base);
+  }
+
+  /* Sublinhado animado */
+  .nav__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition);
+  }
+
+  .nav__link:hover::after,
+  .nav__link[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  /* Dropdown no desktop */
+  .nav__dropdown {
+    position: absolute;
+    top: 100%;
+    left: calc(var(--space-5) * -1);
+    display: block;
+    min-width: 200px;
+    padding: var(--space-3) 0;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    box-shadow: var(--shadow-soft);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity var(--transition), transform var(--transition), visibility 0s linear 0.3s;
+  }
+
+  .nav__item--has-dropdown:hover > .nav__dropdown,
+  .nav__item.is-expanded > .nav__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity var(--transition), transform var(--transition);
+  }
+
+  .nav__item--has-dropdown:hover .nav__chevron {
+    transform: rotate(180deg);
+  }
+
+  .nav__dropdown-link {
+    padding: var(--space-2) var(--space-5);
+  }
+
+  .nav__dropdown-link:hover,
+  .nav__dropdown-link:focus-visible {
+    background: var(--color-card-bg);
+    outline-offset: -2px;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+    gap: var(--space-12);
+  }
+}
+
+/* ≥ 1025px — 4 colunas de produtos */
+@media (min-width: 1025px) {
+  .products__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Dispositivos com mouse: setas da galeria aparecem no hover do card
+   (no touch, a navegação é por swipe + dots) */
+@media (hover: hover) {
+  .product-card__nav {
+    opacity: 0;
+  }
+
+  .product-card__media:hover .product-card__nav,
+  .product-card__media:focus-within .product-card__nav {
+    opacity: 1;
+  }
+}
+
+@media (hover: none) {
+  .product-card__nav {
+    display: none;
+  }
+}
+
+
+/* ==========================================================
+   AJUSTES POR DISPOSITIVO
+   ========================================================== */
+
+/* ---------- Celular ---------- */
+
+/* Muito estreito (iPhone SE 1ª geração etc.): logo volta ao centro */
+@media (max-width: 349px) {
+  .header__logo {
+    font-size: 20px;
+  }
+
+  .header__icon-btn {
+    width: 32px;
+  }
+}
+
+/* Rodapé compacto: Loja e Ajuda lado a lado; marca e newsletter na linha toda */
+@media (max-width: 699px) {
+  .footer {
+    --photo-height: 260px;
+  }
+
+  .footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-7) var(--space-6);
+  }
+
+  .footer__col:first-child,
+  .footer__col:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Duas colunas de produtos em celular: botão em uma linha */
+@media (min-width: 420px) and (max-width: 699px) {
+  .products__grid {
+    column-gap: var(--space-4);
+  }
+
+  .product-card__add {
+    padding-inline: var(--space-1);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+}
+
+/* Celular deitado: o hero cabe na tela */
+@media (orientation: landscape) and (max-height: 480px) {
+  :root {
+    --header-height: 56px;
+  }
+
+  .hero {
+    height: 100vh;
+    height: 100svh;
+    min-height: 300px;
+  }
+
+  .hero__label {
+    margin-bottom: var(--space-2);
+  }
+
+  .hero__title {
+    margin-bottom: var(--space-4);
+    font-size: 34px;
+  }
+
+  .hero__dots {
+    bottom: var(--space-2);
+  }
+}
+
+/* ---------- Tablet (iPads) ---------- */
+
+/* iPad mini e iPad em pé: 3 colunas e rodapé em 4 colunas */
+@media (min-width: 700px) and (max-width: 991px) {
+  .products__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--space-5);
+  }
+
+  /* Afasta o copyright da foto */
+  .footer {
+    --photo-height: 420px;
+    padding-bottom: calc(var(--photo-height) * 0.9);
+  }
+
+  .footer__grid {
+    grid-template-columns: 1.2fr 0.8fr 1.1fr 1.6fr;
+    gap: var(--space-6);
+  }
+
+  .newsletter__btn {
+    padding-inline: var(--space-3);
+  }
+
+  .newsletter__input {
+    padding-inline: var(--space-3);
+  }
+}
+
+/* iPad Pro em pé e iPads deitados: 4 colunas (8 produtos fecham 2 linhas) */
+@media (min-width: 992px) {
+  .products__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Em pé: o hero não ocupa a tela toda, os produtos já aparecem embaixo */
+@media (min-width: 700px) and (orientation: portrait) {
+  .hero {
+    height: 62vh;
+    height: 62svh;
+    max-height: 760px;
+  }
+}
+
+/* ---------- Toque (celular e tablet) ---------- */
+
+@media (pointer: coarse) {
+  /* Alvos maiores para o dedo */
+  .product-card__swatches {
+    flex-wrap: wrap;
+  }
+
+  .product-card__swatch {
+    width: 32px;
+    height: 32px;
+  }
+
+  .product-card__swatch::before {
+    width: 20px;
+    height: 20px;
+  }
+
+  .product-card__size {
+    min-width: 40px;
+    height: 40px;
+  }
+
+  .product-card__wishlist {
+    width: 44px;
+    height: 44px;
+  }
+
+  .hero__dot {
+    width: 32px;
+    height: 32px;
+  }
+
+  .qty__btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .footer__link {
+    display: inline-block;
+    padding-block: 5px;
+  }
+
+  /* 16px: evita o zoom automático do iOS ao focar o campo */
+  .newsletter__input {
+    font-size: 16px;
+  }
+}
+
+/* ---------- Notebooks de tela baixa (T450 1366×768, 1600×900) ---------- */
+
+@media (min-width: 992px) and (max-height: 820px) {
+  :root {
+    --header-height: 64px;
+    --section-spacing: 56px;
+  }
+
+  .hero__title {
+    margin-bottom: var(--space-6);
+    font-size: 54px;
+  }
+
+  .filters {
+    margin-bottom: var(--space-7);
+  }
+
+  .products__grid {
+    row-gap: 56px;
+  }
+
+  .footer {
+    --photo-height: 360px;
+  }
+}
+
+/* Até ~700px úteis (1366×768): cards menores, para a 1ª fileira caber na tela */
+@media (min-width: 1200px) and (max-height: 700px) {
+  :root {
+    --container-max: 1180px;
+    --section-spacing: 36px;
+  }
+
+  .section__title {
+    margin-bottom: var(--space-2);
+    font-size: 28px;
+  }
+
+  .filters {
+    margin-bottom: var(--space-5);
+  }
+}
