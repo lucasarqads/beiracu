@@ -47,7 +47,7 @@ const Lightbox = (() => {
     if (!els.dialog || !product) return;
 
     const color = getProductColor(product, colorId);
-    images = getProductImages(product, colorId);
+    images = getProductZoomImages(product, colorId);
     productName = color ? `${product.nome} — ${color.nome}` : product.nome;
     opener = trigger;
 

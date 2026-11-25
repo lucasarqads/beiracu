@@ -25,6 +25,7 @@
  * inclinacao: opcional — graus de inclinação da capa no card (positivo = para a direita).
  * fotosModelo: opcional — posições (a partir de 0) das fotos de modelo recortada: só elas são
  *              aproximadas. Use quando a capa é a peça e as demais são a modelo.
+ * ampliadas: opcional — fotos exibidas ao ampliar, na mesma ordem das do card (ex.: com fundo).
  * preencherFoto: opcional — true para fotos com cenário (preenchem o quadro do card,
  *                cortando as sobras). Na ampliação a foto aparece inteira.
  *
@@ -139,6 +140,7 @@ const PRODUCTS = [
     imagem: 'assets/img/colecoes/essencial/2026/camisa-oversized/camisanovasenta.webp',
     aproximarModelo: true, // recorte de corpo inteiro: aproxima no card
     galeria: ['assets/img/colecoes/essencial/2026/camisa-oversized/camisanovape.webp', 'assets/img/colecoes/essencial/2026/camisa-oversized/camisanovacosta.webp'],
+    ampliadas: ['assets/img/colecoes/essencial/2026/camisa-oversized/modelooversize.webp', 'assets/img/colecoes/essencial/2026/camisa-oversized/modelooversizeempe.webp', 'assets/img/colecoes/essencial/2026/camisa-oversized/modelooversizecosta.webp'], // com fundo, na mesma ordem
   },
   {
     id: 3,
@@ -175,18 +177,18 @@ const PRODUCTS = [
     categoria: 'acessorios',
     preco: 159.9,
     precoAntigo: 199.9,
-    imagem: 'assets/img/colecoes/beira-mar/2026/bolsa-palha/bolsa-maracuja.webp',
+    imagem: 'assets/img/colecoes/beira-mar/2026/bolsa-palha/bolsa-ceuazul.webp',
     // PNGs originais (bagnatual.png, baglimao.png...) em originais/
     // TROCAR IMAGEM: fotos 2 e 3 do carrossel em cada cor
     //   (bolsa-foto2-<cor>.webp e bolsa-foto3-<cor>.webp, na pasta do produto)
     cores: [
+      { id: 'ceuazul', nome: 'Céu Azul', hex: '#9FB7C2' },
       { id: 'maracuja', nome: 'Maracujá', hex: '#DABB1E' },
       { id: 'laranja', nome: 'Laranja', hex: '#E46C2A' },
       // TODO: o original da Natural é pequeno (351px) — trocar por uma versão maior
       { id: 'natural', nome: 'Natural', hex: '#B98F6C' },
       { id: 'limao', nome: 'Limão', hex: '#9CCB35' },
       { id: 'amora', nome: 'Amora', hex: '#E4407A' },
-      { id: 'ceuazul', nome: 'Céu Azul', hex: '#9FB7C2' },
     ].map((cor) => ({
       ...cor,
       imagens: [
@@ -207,6 +209,7 @@ const PRODUCTS = [
     imagem: 'assets/img/colecoes/verao/2026/bermuda-chino/bermudanovape.webp',
     aproximarModelo: true, // recorte de corpo inteiro: aproxima no card
     galeria: ['assets/img/colecoes/verao/2026/bermuda-chino/bermudanovacosta.webp', 'assets/img/colecoes/verao/2026/bermuda-chino/bermudanovasenta.webp'],
+    ampliadas: ['assets/img/colecoes/verao/2026/bermuda-chino/bermudacapa.webp', 'assets/img/colecoes/verao/2026/bermuda-chino/bermudacosta.webp', 'assets/img/colecoes/verao/2026/bermuda-chino/bermudasenta.webp'], // com fundo, na mesma ordem
   },
   {
     id: 10,
@@ -282,6 +285,12 @@ function getProductImages(product, colorId) {
   const color = getProductColor(product, colorId);
   if (color) return color.imagens;
   return [product.imagem, ...(product.galeria || [])].filter(Boolean);
+}
+
+/** Fotos exibidas ao ampliar: "ampliadas" (se houver) ou as mesmas do card */
+function getProductZoomImages(product, colorId) {
+  const images = getProductImages(product, colorId);
+  return images.map((src, i) => product.ampliadas?.[i] || src);
 }
 
 /** Foto pequena usada no mini-cart */
